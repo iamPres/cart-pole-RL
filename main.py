@@ -5,7 +5,7 @@ import random
 
 env = gym.make('CartPole-v0')
 max_episodes = 10000
-decay = 0.99
+decay = 0.999
 epsilon = 1
 q = np.zeros((49, 200, 41, 200, 2))
 alpha = 0.1
@@ -67,7 +67,7 @@ for ep in range(max_episodes):
         if new_state[0] < 0 or new_state[0] > 48:
             break
 
-        q[state[0], state[1], state[2], state[3], action] += alpha * (reward + gamma * (np.max(q[new_state[0], new_state[1], new_state[2], new_state[3]]) - q[state[0], state[1], state[2], state[3], action]))
+        q[state[0], state[1], state[2], state[3], action] += alpha * (reward + (gamma * (np.max(q[new_state[0], new_state[1], new_state[2], new_state[3]]) - q[state[0], state[1], state[2], state[3], action])))
 
         state = new_state
 
